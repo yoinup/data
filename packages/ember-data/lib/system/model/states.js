@@ -604,8 +604,12 @@ var states = {
         },
 
         unloadRecord: function(manager) {
+          var record = get(manager, 'record');
+          record.clearRelationships();
+          record.withTransaction(function(t) {
+            t.recordIsMoving('updated', record);
+          });
           manager.transitionTo('deleted.saved');
-          get(manager, 'record').clearRelationships();
         },
 
         willCommit: function(manager) {

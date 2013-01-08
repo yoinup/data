@@ -18,6 +18,9 @@ DS.AdapterPopulatedRecordArray = DS.RecordArray.extend({
     set(this, 'isLoaded', true);
     this.endPropertyChanges();
 
-    this.trigger('didLoad');
+    var self = this;
+    Ember.run.once(function() {
+      self.trigger('didLoad');
+    });
   }
 });
